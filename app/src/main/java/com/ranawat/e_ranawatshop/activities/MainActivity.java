@@ -1,8 +1,10 @@
-package com.ranawat.e_ranawatshop;
+package com.ranawat.e_ranawatshop.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.ranawat.e_ranawatshop.R;
 
 public class MainActivity extends AppCompatActivity {
 

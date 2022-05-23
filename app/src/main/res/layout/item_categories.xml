@@ -5,18 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ImageView
+    <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/img"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:background="@color/purple_500"
+        android:padding="5dp"
+        android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+        app:riv_mutate_background="true"
+        app:riv_oval="true"
+        tools:src="@tools:sample/backgrounds/scenic" />
 
     <TextView
-        android:id="@+id/level"
-        android:layout_width="wrap_content"
+        android:id="@+id/label"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="@+id/img"

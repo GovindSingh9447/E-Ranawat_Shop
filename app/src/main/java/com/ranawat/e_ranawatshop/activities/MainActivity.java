@@ -3,8 +3,16 @@ package com.ranawat.e_ranawatshop.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.ranawat.e_ranawatshop.R;
 import com.ranawat.e_ranawatshop.adapters.CategoryAdapter;
@@ -12,10 +20,15 @@ import com.ranawat.e_ranawatshop.adapters.ProductAdapter;
 import com.ranawat.e_ranawatshop.databinding.ActivityMainBinding;
 import com.ranawat.e_ranawatshop.models.Category;
 import com.ranawat.e_ranawatshop.models.Product;
+import com.ranawat.e_ranawatshop.utils.Constants;
 
 import org.imaginativeworld.whynotimagecarousel.model.CarouselItem;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.jar.JarException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,30 +49,16 @@ public class MainActivity extends AppCompatActivity {
         initCategories();
         initProducts();
 
+        getCategories();
+
+
 
     }
 
-    private void initSlider() {
-        binding.carousel.addData(new CarouselItem("https://imgs.search.brave.com/9E0_gwOWaUOVqP0kKXCiwO8gsTQRUGU-51Y9VS2fTG8/rs:fit:844:225:1/g:ce/aHR0cHM6Ly90c2Ux/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5S/LTVxcnB0ZEMyRndx/WDQwTEJjS2pBSGFF/SyZwaWQ9QXBp","Animals"));
-        binding.carousel.addData(new CarouselItem("https://imgs.search.brave.com/9E0_gwOWaUOVqP0kKXCiwO8gsTQRUGU-51Y9VS2fTG8/rs:fit:844:225:1/g:ce/aHR0cHM6Ly90c2Ux/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5S/LTVxcnB0ZEMyRndx/WDQwTEJjS2pBSGFF/SyZwaWQ9QXBp","Animals"));
-        binding.carousel.addData(new CarouselItem("https://imgs.search.brave.com/9E0_gwOWaUOVqP0kKXCiwO8gsTQRUGU-51Y9VS2fTG8/rs:fit:844:225:1/g:ce/aHR0cHM6Ly90c2Ux/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5S/LTVxcnB0ZEMyRndx/WDQwTEJjS2pBSGFF/SyZwaWQ9QXBp","Animals"));
-    }
 
     void initCategories(){
         categories =new ArrayList<>();
-        //  categories.add(new Category("Sports & Outdoor ", " ", " ", " ",1));
-        //  categories.add(new Category("Women's Fashion ", " ", " ", " ",1));
-        categories.add(new Category("Home & Lifestyle ", "https://imgs.search.brave.com/AjKOBvJ3VJa5EbDfKzBT1FOjHPezxve7SWe9mZO5vnk/rs:fit:474:225:1/g:ce/aHR0cHM6Ly90c2Uy/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5v/eldheHlrYUpCa0FM/c1FZX041em93SGFI/YSZwaWQ9QXBp", "#18eb4e", " dfxgdgdxgfxgjxghxcxhgfxgjxgx kfkiyfkyhg kfhgc kgcfj",1));
-        //categories.add(new Category("Heath & Beauty ", " ", " ", " ",1));
-        categories.add(new Category("Food & Groceries ", "https://imgs.search.brave.com/k-7eKCWWwkgcwe2s_5OKOjbdZFOdeuvkiNZRUEq--L0/rs:fit:512:512:1/g:ce/aHR0cHM6Ly9jZG4x/Lmljb25maW5kZXIu/Y29tL2RhdGEvaWNv/bnMvZWNvbW1lcmNl/LXZvbDEtZmlsbGVk/LW91dGxpbmUtYnVr/ZWljb24vMzIvYnVy/Z2VyX2Zvb2RfY2F0/ZWdvcnlfZWNvbW1l/cmNlX2J1a2VpY29u/X29ubGluZV9zaG9w/LTUxMi5wbmc ", "#18eb4e", " dfxgdgdxgfxgjxghxcxhgfxgjxgx kfkiyfkyhg kfhgc kgcfj",1));
-        categoryAdapter = new CategoryAdapter(this, categories);
-        categories.add(new Category("Home & Lifestyle ", "https://imgs.search.brave.com/AjKOBvJ3VJa5EbDfKzBT1FOjHPezxve7SWe9mZO5vnk/rs:fit:474:225:1/g:ce/aHR0cHM6Ly90c2Uy/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5v/eldheHlrYUpCa0FM/c1FZX041em93SGFI/YSZwaWQ9QXBp", "#18eb4e", " dfxgdgdxgfxgjxghxcxhgfxgjxgx kfkiyfkyhg kfhgc kgcfj",1));
-        categories.add(new Category("Home & Lifestyle ", "https://imgs.search.brave.com/AjKOBvJ3VJa5EbDfKzBT1FOjHPezxve7SWe9mZO5vnk/rs:fit:474:225:1/g:ce/aHR0cHM6Ly90c2Uy/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5v/eldheHlrYUpCa0FM/c1FZX041em93SGFI/YSZwaWQ9QXBp", "#18eb4e", " dfxgdgdxgfxgjxghxcxhgfxgjxgx kfkiyfkyhg kfhgc kgcfj",1));
-        categories.add(new Category("Home & Lifestyle ", "https://imgs.search.brave.com/AjKOBvJ3VJa5EbDfKzBT1FOjHPezxve7SWe9mZO5vnk/rs:fit:474:225:1/g:ce/aHR0cHM6Ly90c2Uy/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5v/eldheHlrYUpCa0FM/c1FZX041em93SGFI/YSZwaWQ9QXBp", "#18eb4e", " dfxgdgdxgfxgjxghxcxhgfxgjxgx kfkiyfkyhg kfhgc kgcfj",1));
-        categories.add(new Category("Home & Lifestyle ", "https://imgs.search.brave.com/AjKOBvJ3VJa5EbDfKzBT1FOjHPezxve7SWe9mZO5vnk/rs:fit:474:225:1/g:ce/aHR0cHM6Ly90c2Uy/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5v/eldheHlrYUpCa0FM/c1FZX041em93SGFI/YSZwaWQ9QXBp", "#18eb4e", " dfxgdgdxgfxgjxghxcxhgfxgjxgx kfkiyfkyhg kfhgc kgcfj",1));
-        categories.add(new Category("Home & Lifestyle ", "https://imgs.search.brave.com/AjKOBvJ3VJa5EbDfKzBT1FOjHPezxve7SWe9mZO5vnk/rs:fit:474:225:1/g:ce/aHR0cHM6Ly90c2Uy/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5v/eldheHlrYUpCa0FM/c1FZX041em93SGFI/YSZwaWQ9QXBp", "#18eb4e", " dfxgdgdxgfxgjxghxcxhgfxgjxgx kfkiyfkyhg kfhgc kgcfj",1));
-        categories.add(new Category("Home & Lifestyle ", "https://imgs.search.brave.com/AjKOBvJ3VJa5EbDfKzBT1FOjHPezxve7SWe9mZO5vnk/rs:fit:474:225:1/g:ce/aHR0cHM6Ly90c2Uy/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5v/eldheHlrYUpCa0FM/c1FZX041em93SGFI/YSZwaWQ9QXBp", "#18eb4e", " dfxgdgdxgfxgjxghxcxhgfxgjxgx kfkiyfkyhg kfhgc kgcfj",1));
-        categories.add(new Category("Home & Lifestyle ", "https://imgs.search.brave.com/AjKOBvJ3VJa5EbDfKzBT1FOjHPezxve7SWe9mZO5vnk/rs:fit:474:225:1/g:ce/aHR0cHM6Ly90c2Uy/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5v/eldheHlrYUpCa0FM/c1FZX041em93SGFI/YSZwaWQ9QXBp", "#18eb4e", " dfxgdgdxgfxgjxghxcxhgfxgjxgx kfkiyfkyhg kfhgc kgcfj",1));
+        categoryAdapter =new CategoryAdapter(this,categories);
 
 
         GridLayoutManager layoutManager=new GridLayoutManager(this,4);
@@ -69,22 +68,92 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    void getCategories() {
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        StringRequest request = new StringRequest(Request.Method.GET, Constants.GET_CATEGORIES_URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    Log.e("err", response);
+                    JSONObject mainObj = new JSONObject(response);
+                    if(mainObj.getString("status").equals("success")) {
+                        JSONArray categoriesArray = mainObj.getJSONArray("categories");
+                        for(int i =0; i< categoriesArray.length(); i++) {
+                            JSONObject object = categoriesArray.getJSONObject(i);
+                            Category category = new Category(
+                                    object.getString("name"),
+                                    Constants.CATEGORIES_IMAGE_URL + object.getString("icon"),
+                                    object.getString("color"),
+                                    object.getString("brief"),
+                                    object.getInt("id")
+                            );
+                            categories.add(category);
+                        }
+                        categoryAdapter.notifyDataSetChanged();
+                    }  // DO nothing
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        queue.add(request);
+    }
+
+    void getRecentProducts(){
+        RequestQueue queue=Volley.newRequestQueue(this);
+
+        String url=Constants.GET_PRODUCTS_URL +"?count=10";
+        StringRequest request= new StringRequest(Request.Method.GET, url, response -> {
+
+            try {
+                JSONObject object=new JSONObject(response);
+                if (object.getString("status").equals("success")){
+                    JSONArray productArray= object.getJSONArray("products");
+                    for(int i =0; i< productArray.length(); i++) {
+                        JSONObject childObj = productArray.getJSONObject(i);
+                        Product product = new Product(
+                                childObj.getString("name"),
+                                Constants.PRODUCTS_IMAGE_URL + childObj.getString("image"),
+                                childObj.getString("status"),
+                                childObj.getDouble("price"),
+                                childObj.getDouble("price_discount"),
+                                childObj.getInt("stock"),
+                                childObj.getInt("id")
+
+                        );
+                        products.add(product);
+                    }
+                    productAdapter.notifyDataSetChanged();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }, error -> {
+
+        });
+        queue.add(request);
+    }
+
+    private void initSlider() {
+        binding.carousel.addData(new CarouselItem("https://imgs.search.brave.com/9E0_gwOWaUOVqP0kKXCiwO8gsTQRUGU-51Y9VS2fTG8/rs:fit:844:225:1/g:ce/aHR0cHM6Ly90c2Ux/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5S/LTVxcnB0ZEMyRndx/WDQwTEJjS2pBSGFF/SyZwaWQ9QXBp","Animals"));
+        binding.carousel.addData(new CarouselItem("https://imgs.search.brave.com/9E0_gwOWaUOVqP0kKXCiwO8gsTQRUGU-51Y9VS2fTG8/rs:fit:844:225:1/g:ce/aHR0cHM6Ly90c2Ux/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5S/LTVxcnB0ZEMyRndx/WDQwTEJjS2pBSGFF/SyZwaWQ9QXBp","Animals"));
+        binding.carousel.addData(new CarouselItem("https://imgs.search.brave.com/9E0_gwOWaUOVqP0kKXCiwO8gsTQRUGU-51Y9VS2fTG8/rs:fit:844:225:1/g:ce/aHR0cHM6Ly90c2Ux/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5S/LTVxcnB0ZEMyRndx/WDQwTEJjS2pBSGFF/SyZwaWQ9QXBp","Animals"));
+    }
+
     void initProducts(){
         products= new ArrayList<>();
         productAdapter=new ProductAdapter(this,products);
 
-        products.add(new Product("Home & Lifestyle ", "https://imgs.search.brave.com/AjKOBvJ3VJa5EbDfKzBT1FOjHPezxve7SWe9mZO5vnk/rs:fit:474:225:1/g:ce/aHR0cHM6Ly90c2Uy/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5v/eldheHlrYUpCa0FM/c1FZX041em93SGFI/YSZwaWQ9QXBp", "#18eb4e", 2,8,5,1));
-
-        products.add(new Product("Home & Lifestyle ", "https://imgs.search.brave.com/AjKOBvJ3VJa5EbDfKzBT1FOjHPezxve7SWe9mZO5vnk/rs:fit:474:225:1/g:ce/aHR0cHM6Ly90c2Uy/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5v/eldheHlrYUpCa0FM/c1FZX041em93SGFI/YSZwaWQ9QXBp", "#18eb4e", 2,8,5,1));
-        products.add(new Product("Home & Lifestyle ", "https://imgs.search.brave.com/AjKOBvJ3VJa5EbDfKzBT1FOjHPezxve7SWe9mZO5vnk/rs:fit:474:225:1/g:ce/aHR0cHM6Ly90c2Uy/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5v/eldheHlrYUpCa0FM/c1FZX041em93SGFI/YSZwaWQ9QXBp", "#18eb4e", 2,8,5,1));
-        products.add(new Product("Home & Lifestyle ", "https://imgs.search.brave.com/AjKOBvJ3VJa5EbDfKzBT1FOjHPezxve7SWe9mZO5vnk/rs:fit:474:225:1/g:ce/aHR0cHM6Ly90c2Uy/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5v/eldheHlrYUpCa0FM/c1FZX041em93SGFI/YSZwaWQ9QXBp", "#18eb4e", 2,8,5,1));
-        products.add(new Product("Home & Lifestyle ", "https://imgs.search.brave.com/AjKOBvJ3VJa5EbDfKzBT1FOjHPezxve7SWe9mZO5vnk/rs:fit:474:225:1/g:ce/aHR0cHM6Ly90c2Uy/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5v/eldheHlrYUpCa0FM/c1FZX041em93SGFI/YSZwaWQ9QXBp", "#18eb4e", 2,8,5,1));
-
-
-
-        categories.add(new Category("Home & Lifestyle ", "https://imgs.search.brave.com/AjKOBvJ3VJa5EbDfKzBT1FOjHPezxve7SWe9mZO5vnk/rs:fit:474:225:1/g:ce/aHR0cHM6Ly90c2Uy/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5v/eldheHlrYUpCa0FM/c1FZX041em93SGFI/YSZwaWQ9QXBp", "#18eb4e", " dfxgdgdxgfxgjxghxcxhgfxgjxgx kfkiyfkyhg kfhgc kgcfj",1));
-
-
+        getRecentProducts();
         GridLayoutManager layoutManager=new GridLayoutManager(this,2);
         binding.productReView.setLayoutManager(layoutManager);
         binding.productReView.setAdapter(productAdapter);

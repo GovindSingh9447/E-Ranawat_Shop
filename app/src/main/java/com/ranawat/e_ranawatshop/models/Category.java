@@ -2,14 +2,14 @@ package com.ranawat.e_ranawatshop.models;
 
 public class Category {
 
-    private String name , icon , color, brif;
+    private String name , icon , color, brief;
     private int id;
 
-    public Category(String name, String icon, String color, String brif, int id) {
+    public Category(String name, String icon, String color, String brief, int id) {
         this.name = name;
         this.icon = icon;
         this.color = color;
-        this.brif = brif;
+        this.brief = brief;
         this.id = id;
     }
 
@@ -38,11 +38,11 @@ public class Category {
     }
 
     public String getBrif() {
-        return brif;
+        return brief;
     }
 
-    public void setBrif(String brif) {
-        this.brif = brif;
+    public void setBrif(String brief) {
+        this.brief = brief;
     }
 
     public int getId() {

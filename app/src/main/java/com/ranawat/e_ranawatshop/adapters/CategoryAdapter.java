@@ -2,6 +2,7 @@ package com.ranawat.e_ranawatshop.adapters;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +36,7 @@ public class CategoryAdapter extends  RecyclerView.Adapter<CategoryAdapter.Categ
     @Override
     public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
         Category category=categories.get(position);
-        holder.binding.label.setText(category.getName());
+        holder.binding.label.setText(Html.fromHtml(category.getName()));
         Glide.with(context)
                 .load(category.getIcon())
                 .into(holder.binding.img);

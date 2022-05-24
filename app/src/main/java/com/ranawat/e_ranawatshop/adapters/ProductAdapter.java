@@ -1,6 +1,7 @@
 package com.ranawat.e_ranawatshop.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.ContentInfo;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.ranawat.e_ranawatshop.R;
+import com.ranawat.e_ranawatshop.activities.ProductDetailActivity;
 import com.ranawat.e_ranawatshop.databinding.ItemProductBinding;
 import com.ranawat.e_ranawatshop.models.Product;
 
@@ -40,6 +42,18 @@ public class ProductAdapter extends  RecyclerView.Adapter<ProductAdapter.Product
                 .into(holder.binding.img);
         holder.binding.label.setText(product.getName());
         holder.binding.price.setText("RS "+ product.getPrice());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(context, ProductDetailActivity.class);
+                intent.putExtra("name", product.getName());
+                intent.putExtra("image", product.getImage());
+                intent.putExtra("id", product.getId());
+                intent.putExtra("price", product.getPrice());
+                context.startActivity(intent);
+            }
+        });
 
     }
 

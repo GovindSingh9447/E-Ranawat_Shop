@@ -26,6 +26,7 @@
         android:text="TextView"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/img"
         app:layout_constraintStart_toStartOf="@+id/img"

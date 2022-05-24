@@ -28,6 +28,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.concurrent.CompletionService;
 import java.util.jar.JarException;
 
 public class MainActivity extends AppCompatActivity {
@@ -143,11 +144,39 @@ public class MainActivity extends AppCompatActivity {
         queue.add(request);
     }
 
-    private void initSlider() {
-        binding.carousel.addData(new CarouselItem("https://imgs.search.brave.com/9E0_gwOWaUOVqP0kKXCiwO8gsTQRUGU-51Y9VS2fTG8/rs:fit:844:225:1/g:ce/aHR0cHM6Ly90c2Ux/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5S/LTVxcnB0ZEMyRndx/WDQwTEJjS2pBSGFF/SyZwaWQ9QXBp","Animals"));
-        binding.carousel.addData(new CarouselItem("https://imgs.search.brave.com/9E0_gwOWaUOVqP0kKXCiwO8gsTQRUGU-51Y9VS2fTG8/rs:fit:844:225:1/g:ce/aHR0cHM6Ly90c2Ux/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5S/LTVxcnB0ZEMyRndx/WDQwTEJjS2pBSGFF/SyZwaWQ9QXBp","Animals"));
-        binding.carousel.addData(new CarouselItem("https://imgs.search.brave.com/9E0_gwOWaUOVqP0kKXCiwO8gsTQRUGU-51Y9VS2fTG8/rs:fit:844:225:1/g:ce/aHR0cHM6Ly90c2Ux/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5S/LTVxcnB0ZEMyRndx/WDQwTEJjS2pBSGFF/SyZwaWQ9QXBp","Animals"));
+    void getRecentOffers(){
+        RequestQueue queue=Volley.newRequestQueue(this);
+
+        StringRequest request=new StringRequest(Request.Method.GET, Constants.GET_OFFERS_URL, response -> {
+            try {
+                JSONObject object =new JSONObject(response);
+                if (object.getString("status").equals("success")){
+                    JSONArray offerArray =object.getJSONArray("news_infos");
+                    for (int i=0;i< offerArray.length();i++){
+                        JSONObject childObj =offerArray.getJSONObject(i);
+                        binding.carousel.addData(
+                                new CarouselItem(
+                                        Constants.NEWS_IMAGE_URL +childObj.getString("image"),
+                                        childObj.getString("title")
+                                )
+                        );
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+        }, error -> {
+
+
+        });
+        queue.add(request);
     }
+
+    private void initSlider() {
+        getRecentOffers();
+           }
 
     void initProducts(){
         products= new ArrayList<>();

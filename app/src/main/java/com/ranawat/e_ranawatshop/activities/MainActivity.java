@@ -13,6 +13,8 @@ import com.ranawat.e_ranawatshop.databinding.ActivityMainBinding;
 import com.ranawat.e_ranawatshop.models.Category;
 import com.ranawat.e_ranawatshop.models.Product;
 
+import org.imaginativeworld.whynotimagecarousel.model.CarouselItem;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,11 +32,19 @@ public class MainActivity extends AppCompatActivity {
         binding= ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        initSlider();
         initCategories();
+        initProducts();
 
-        iniProducts();
 
     }
+
+    private void initSlider() {
+        binding.carousel.addData(new CarouselItem("https://imgs.search.brave.com/9E0_gwOWaUOVqP0kKXCiwO8gsTQRUGU-51Y9VS2fTG8/rs:fit:844:225:1/g:ce/aHR0cHM6Ly90c2Ux/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5S/LTVxcnB0ZEMyRndx/WDQwTEJjS2pBSGFF/SyZwaWQ9QXBp","Animals"));
+        binding.carousel.addData(new CarouselItem("https://imgs.search.brave.com/9E0_gwOWaUOVqP0kKXCiwO8gsTQRUGU-51Y9VS2fTG8/rs:fit:844:225:1/g:ce/aHR0cHM6Ly90c2Ux/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5S/LTVxcnB0ZEMyRndx/WDQwTEJjS2pBSGFF/SyZwaWQ9QXBp","Animals"));
+        binding.carousel.addData(new CarouselItem("https://imgs.search.brave.com/9E0_gwOWaUOVqP0kKXCiwO8gsTQRUGU-51Y9VS2fTG8/rs:fit:844:225:1/g:ce/aHR0cHM6Ly90c2Ux/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5S/LTVxcnB0ZEMyRndx/WDQwTEJjS2pBSGFF/SyZwaWQ9QXBp","Animals"));
+    }
+
     void initCategories(){
         categories =new ArrayList<>();
         //  categories.add(new Category("Sports & Outdoor ", " ", " ", " ",1));
@@ -59,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    void iniProducts(){
+    void initProducts(){
         products= new ArrayList<>();
         productAdapter=new ProductAdapter(this,products);
 

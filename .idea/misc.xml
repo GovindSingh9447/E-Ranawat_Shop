@@ -3,8 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/hp/ERanawatShop/app/src/main/res/layout/activity_card.xml" value="0.22" />
         <entry key="..\:/Users/hp/ERanawatShop/app/src/main/res/layout/activity_main.xml" value="0.2203125" />
         <entry key="..\:/Users/hp/ERanawatShop/app/src/main/res/layout/activity_product_detail.xml" value="0.25" />
+        <entry key="..\:/Users/hp/ERanawatShop/app/src/main/res/layout/item_cart.xml" value="0.33" />
         <entry key="..\:/Users/hp/ERanawatShop/app/src/main/res/layout/item_categories.xml" value="0.33" />
         <entry key="..\:/Users/hp/ERanawatShop/app/src/main/res/layout/item_product.xml" value="0.23391215526046988" />
         <entry key="..\:/Users/hp/ERanawatShop/app/src/main/res/menu/cart.xml" value="0.23333333333333334" />
